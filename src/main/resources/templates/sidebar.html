@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Sidebar</title>
+    <link href="@{/css/sidebar.css}"  rel = "stylesheet">
+</head>
+<body>
+    <div class="sidebar" th:fragment="sidebar">
+        <ul>
+            <li><a th:href="@{/bookList}">一覧</a></li>
+            <li><a th:href="@{/regBook}">登録</a></li>
+            <li><a th:href="@{/setting}">設定</a></li>
+        </ul>
+    </div>
+</body>
+</html>

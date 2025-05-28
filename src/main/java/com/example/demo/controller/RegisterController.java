@@ -11,29 +11,27 @@ import com.example.demo.entity.User;
 import com.example.demo.entity.UserDto;
 import com.example.demo.service.UserService;
 
-@Controller // このクラスがWebコントローラーであることを示します
+@Controller 
 public class RegisterController {
 
-    // Spring が自動的に UserService の実装を注入します
     @Autowired
     private UserService userService;
 
-    @GetMapping("/register") // "/register"というURLに対するGETリクエストを処理します
+    @GetMapping("/register")
     public ModelAndView registerForm() {
-        ModelAndView mav = new ModelAndView(); // ModelAndViewオブジェクトを作成します
-        mav.addObject("user", new UserDto()); // 新しいUserDtoオブジェクトを"ユーザー"という名前で追加します
-        mav.setViewName("register"); // 表示するビュー（HTMLファイル）の名前を"register"に設定します
-        return mav; // ModelAndViewオブジェクトを返します
+        ModelAndView mav = new ModelAndView(); 
+        mav.addObject("user", new UserDto()); 
+        mav.setViewName("register"); 
+        return mav; 
     }
 
-    @PostMapping("/register") // "/register"というURLに対するPOSTリクエストを処理します
+    @PostMapping("/register") 
     public String register(@ModelAttribute UserDto userDto) {
-        User existing = userService.findByUsername(userDto.getUserName()); // ユーザー名で既存のユーザーを検索します
+        User existing = userService.findByUsername(userDto.getUserName()); 
         if(existing != null){
-            // ユーザーが既に存在する場合の処理
-            return "register"; // ユーザーが存在するため、再度登録画面を表示します
+            return "register";
         }
-        userService.save(userDto); // ユーザーが存在しない場合、新しいユーザーを保存します
-        return "login"; // 登録が成功した場合、ログイン画面を表示します
+        userService.save(userDto);
+        return "login"; 
     }
 }

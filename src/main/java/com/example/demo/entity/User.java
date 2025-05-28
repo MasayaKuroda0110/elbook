@@ -15,16 +15,16 @@ public class User{
 	
 	@jakarta.persistence.Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "UserId")
+	@Column(name = "user_id")
 	private Integer userId;
 	
-	@Column(name = "UserName",nullable = false,unique = true)
+	@Column(name = "user_name",nullable = false,unique = true)
 	private String userName;
 	
-	@Column(name = "Password",nullable = false)
+	@Column(name = "password",nullable = false)
 	private String password;
 	
-	@Column(name = "Role",nullable = false,unique = true)
+	@Column(name = "role",nullable = false,unique = true)
 	private String role;
 
 	public Integer getUserId() {
