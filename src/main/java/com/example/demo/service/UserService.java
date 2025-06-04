@@ -43,4 +43,18 @@ public class UserService implements UserDetailsService {
 
 		userRepository.save(user);
 	}
+	public void updateUser(User user) {
+	    User existingUser = userRepository.findByUserId(user.getUserId());
+
+	    // ユーザー名の更新
+	    existingUser.setUserName(user.getUserName());
+
+	    // パスワードが入力されている場合のみ更新
+	    if (user.getPassword() != null && !user.getPassword().isEmpty()) {
+	        existingUser.setPassword(passwordEncoder.encode(user.getPassword()));
+	    }
+
+	    // データベースに保存
+	    userRepository.save(existingUser);
+	}
 }

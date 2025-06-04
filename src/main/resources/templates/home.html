@@ -3,12 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <title>ホーム</title>
-<link href="@{/css/rayout.css}"  rel = "stylesheet">
+<link th:href="@{css/layout.css}"  rel = "stylesheet">
 </head>
 <body>
 	<div class="container">
-	<div th:replace ="sidebar :: sidebar"></div>
-	<h1>テスト</h1>
+	<div th:replace ="~{sidebar :: sidebar}"></div>
 	</div>
 </body>
 </html>

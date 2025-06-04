@@ -1,16 +1,23 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <title>Sidebar</title>
-    <link href="@{/css/sidebar.css}"  rel = "stylesheet">
+	<title>Sidebar</title>
+	<link href="@{/css/rayout.css}" rel="stylesheet">
 </head>
+
 <body>
-    <div class="sidebar" th:fragment="sidebar">
-        <ul>
-            <li><a th:href="@{/bookList}">一覧</a></li>
-            <li><a th:href="@{/regBook}">登録</a></li>
-            <li><a th:href="@{/setting}">設定</a></li>
-        </ul>
-    </div>
+	<div class="sidebar" th:fragment="sidebar">
+		<h1>ELBOOK</h1>
+		<ul>
+			<li><a th:href="@{/bookList}">一覧</a></li>
+			<li><a th:href="@{/regBook}">登録</a></li>
+			<li><a th:href="@{/setting}">設定</a></li>
+		</ul>
+		<form th:action="@{/logout}" method="post">
+			<button type="submit" id="logout">ログアウト</button>
+		</form>
+	</div>
 </body>
+
 </html>

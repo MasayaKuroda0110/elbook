@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>ホーム</title>
+	<link th:href="@{css/layout.css}" rel="stylesheet">
+</head>
+
+<body>
+	<div class="container">
+		<div th:replace="~{sidebar :: sidebar}"></div>
+		<div class="content">
+			<h1>書籍一覧</h1>
+
+			<div class="search-section">
+				<input type="text" id="search" placeholder="タイトルや著者で検索">
+				<button>検索</button>
+			</div>
+
+			<table>
+				<thead>
+					<tr>
+						<th>タイトル</th>
+						<th>著者</th>
+						<th>あらすじ・概要</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="book : ${books}">
+						<td th:text="${book.title}"></td>
+						<td th:text="${book.author.name}"></td>
+						<td th:text="${book.summary}"></td>
+						<td>
+							<a th:href="@{/editBook(id=${book.bookId})}">編集</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</body>
+
+</html>

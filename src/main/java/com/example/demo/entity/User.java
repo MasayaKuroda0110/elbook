@@ -24,8 +24,8 @@ public class User{
 	@Column(name = "password",nullable = false)
 	private String password;
 	
-	@Column(name = "role",nullable = false,unique = true)
-	private String role;
+	@Column(name = "role",nullable = false)
+	private String role = "User";
 
 	public Integer getUserId() {
 		return userId;

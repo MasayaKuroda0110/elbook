@@ -7,7 +7,8 @@ import com.example.demo.entity.User;
 /**
  * Userエンティティに対するDB操作を行うリポジトリ定義
  */
-public interface UserRepository extends JpaRepository<User, Long>{
+public interface UserRepository extends JpaRepository<User, Integer>{
 	
 	User findByUserName(String userName);
+	User findByUserId(Integer userId);
 }

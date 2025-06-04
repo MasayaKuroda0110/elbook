@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>ホーム</title>
+	<link th:href="@{css/layout.css}" rel="stylesheet">
+</head>
+
+<body>
+	<div class="container">
+		<div th:replace="~{sidebar :: sidebar}"></div>
+		<div class="content">
+			<h1>書籍情報</h1>
+			<form th:action="@{/Book}" th:object="${book}" method="post">
+				<input type="hidden" name="bookId" th:value="*{bookId}" />
+				<input type="text" id="title" name="title" placeholder="タイトル" th:value="*{title}" required>
+				<br>
+				<input type="text" id="name" name="author.name" placeholder="著者名" th:value="*{author.name}" required>
+				<br>
+				<input type="text" id="summary" name="summary" placeholder="あらすじ・概要" th:value="*{summary}" required>
+				<br>
+				<p th:text="'現在の貸出状況:' + ${transaction.transacitonType}"></p>
+				<br>
+				<p th:if="${transaction.transacitonType == '貸出'}" th:text="${#dates.format(transaction.borrowDate, 'yyyy/MM/dd')}"></p>
+				<input type="submit" value="更新">
+			</form>
+		</div>
+</body>
+
+</html>

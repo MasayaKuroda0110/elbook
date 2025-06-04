@@ -25,7 +25,10 @@ public class SecurityConfig {
 						.anyRequest().authenticated())
 				.formLogin(formLogin -> formLogin
 						.loginPage("/login").permitAll())
-				.logout(logout -> logout.logoutUrl("/logout"));
+				.logout(logout -> logout.logoutUrl("/logout")
+						.logoutSuccessUrl("/login?logout")
+						.invalidateHttpSession(true)
+						.deleteCookies("JSESSIONID"));
 
 		return http.build();
 	}

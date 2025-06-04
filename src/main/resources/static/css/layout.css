@@ -3,13 +3,24 @@
     flex-direction: row;
 }
 
+/**
+サイドバー
+*/
 .sidebar {
-    width: 200px;
+    width: 15%;
     background-color: #f8f9fa;
     padding: 10px;
     height: 100vh;
 }
+.logout{
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	margin: 10px;
+}
 
-h1 {
+.content {
+    width: 85%;
     padding-left: 20px;
+    display: block;
 }

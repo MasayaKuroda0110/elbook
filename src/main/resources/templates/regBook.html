@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>ホーム</title>
+<link th:href="@{css/layout.css}"  rel = "stylesheet">
+</head>
+<body>
+	<div class="container">
+	<div th:replace ="~{sidebar :: sidebar}"></div>
+    <div class="content">
+        <h1>書籍登録</h1>
+        <form th:action="@{/regBook}" method="post">
+			<input type="text" id="title" name="title" placeholder="タイトル" required>
+			<br>
+			<input type="text" id="name" name="name"  placeholder="著者名" required>
+			<br>
+			<input type="text" id="summary" name="summary" placeholder="あらすじ・概要" required>
+			<br>
+			<input type="submit" value="新規登録">
+		</form>
+    </div>
+</body>
+</html>
