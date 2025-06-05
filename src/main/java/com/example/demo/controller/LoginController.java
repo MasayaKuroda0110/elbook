@@ -1,12 +1,28 @@
 package com.example.demo.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import com.example.demo.entity.Book;
+import com.example.demo.entity.User;
+import com.example.demo.service.BookService;
+import com.example.demo.service.UserService;
 
 @Controller 
 public class LoginController {
+	
+	@Autowired
+	private UserService userService;
+	
+	@Autowired
+	private BookService bookService;
 
     @GetMapping("/login") 
     public String login() {
@@ -23,7 +39,22 @@ public class LoginController {
     }
     
     @GetMapping("/home") 
-    public String home() {
+    public String home(Model model) {
+    	List<Book> books = bookService.findAllRentalBooks(getCurrentUser());
+    	model.addAttribute("books",books);
         return "home"; 
     }
+    
+	
+	public User getCurrentUser() {
+	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	    if (authentication != null && authentication.isAuthenticated()) {
+	        Object principal = authentication.getPrincipal();
+	        if (principal instanceof UserDetails) {
+	            UserDetails userDetails = (UserDetails) principal;
+	            return userService.findByUsername(userDetails.getUsername());
+	        }
+	    }
+	    return null;
+	}
 }

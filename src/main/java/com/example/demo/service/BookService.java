@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.Author;
 import com.example.demo.entity.Book;
+import com.example.demo.entity.Transaction;
+import com.example.demo.entity.User;
 import com.example.demo.repository.AuthorRepository;
 import com.example.demo.repository.BookRepository;
 
@@ -40,6 +43,24 @@ public class BookService{
 	
 	public List<Book> findAllBooks(){
 		return bookRepository.findAll();
+	}
+	
+	/**
+	 * ログイン中のユーザーが借りている書籍リスト検索
+	 * @param user ログイン中のユーザー
+	 * @return レンタルリスト
+	 */
+	public List<Book> findAllRentalBooks(User user){
+		List<Transaction> transactionLists = new ArrayList<>();
+		List<Book> rentalLists = new ArrayList<>();
+		transactionLists = transactionService.findAllTransaction();
+		for(Transaction transaction:transactionLists) {
+			if(transaction.getTransacitonType().equals("貸出") && transaction.getUser()==user) {
+				rentalLists.add(transaction.getBook());
+			}
+		}
+		
+		return rentalLists;
 	}
 	
 	public Book findBook(Integer Id) {

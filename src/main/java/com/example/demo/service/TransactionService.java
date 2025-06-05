@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,13 +25,22 @@ public class TransactionService{
 	}
 	
 	public Transaction borrowBook(User user,Book book,Date borrowDate) {
-		Transaction transaction = new Transaction();
-		transaction.setUser(user);
-		transaction.setBook(book);
-		transaction.setTransacitonType("貸出");
-		transaction.setBorrowDate(new Date());
-		transactionRepository.save(transaction);
-		return transaction;
+		Transaction existingTransaction = transactionRepository.findByBook(book);
+		
+		existingTransaction.setUser(user);
+		existingTransaction.setTransacitonType("貸出");
+		existingTransaction.setBorrowDate(new Date());
+		transactionRepository.save(existingTransaction);
+		return existingTransaction;
+	}
+	
+	public Transaction returnBook(Book book,Date returnDate) {
+		Transaction existingTransaction = transactionRepository.findByBook(book);
+		
+		existingTransaction.setTransacitonType("本棚");
+		existingTransaction.setReturnDate(returnDate);
+		transactionRepository.save(existingTransaction);
+		return existingTransaction;
 	}
 	
     public boolean isBookCurrentlyBorrowed(Book book) {
@@ -39,5 +49,9 @@ public class TransactionService{
     
     public Transaction findTransaction(Book book) {
     	return transactionRepository.findByBook(book);
+    }
+    
+    public List<Transaction> findAllTransaction(){
+    	return transactionRepository.findAll();
     }
 }

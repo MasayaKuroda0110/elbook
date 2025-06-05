@@ -4,11 +4,13 @@ import java.util.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 /**
@@ -35,6 +37,9 @@ public class Book {
 	@ManyToOne
 	@JoinColumn(name = "author_id", referencedColumnName = "author_id")
 	private Author author;
+	
+	@OneToOne(mappedBy = "book", fetch = FetchType.LAZY)
+	private Transaction transaction;
 
 	public Integer getBookId() {
 		return bookId;
@@ -74,6 +79,14 @@ public class Book {
 
 	public void setAuthor(Author author) {
 		this.author = author;
+	}
+
+	public Transaction getTransaction() {
+		return transaction;
+	}
+
+	public void setTransaction(Transaction transaction) {
+		this.transaction = transaction;
 	}
 
 }

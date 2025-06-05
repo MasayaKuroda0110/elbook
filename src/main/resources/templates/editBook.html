@@ -21,9 +21,14 @@
 				<input type="text" id="summary" name="summary" placeholder="あらすじ・概要" th:value="*{summary}" required>
 				<br>
 				<p th:text="'現在の貸出状況:' + ${transaction.transacitonType}"></p>
-				<br>
-				<p th:if="${transaction.transacitonType == '貸出'}" th:text="${#dates.format(transaction.borrowDate, 'yyyy/MM/dd')}"></p>
-				<input type="submit" value="更新">
+				<p th:if="${transaction.transacitonType == '貸出'}" th:text="'貸出日' + ${#dates.format(transaction.borrowDate, 'yyyy/MM/dd')}"></p>
+				
+				<button type="submit" name="action" value="rental" th:if="${transaction.transacitonType == '本棚'}">貸出</button>
+				
+				<button type="submit" name="action" value="return" th:if="${transaction.transacitonType == '貸出' and transaction.user.userId == currentUserId}">返却</button>
+				
+				<button type="submit" name="action" value="update">更新</button>
+				
 			</form>
 		</div>
 </body>

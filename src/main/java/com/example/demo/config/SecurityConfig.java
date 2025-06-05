@@ -22,6 +22,8 @@ public class SecurityConfig {
 		http
 				.authorizeHttpRequests(authorize -> authorize
 						.requestMatchers("/login", "/register").permitAll()
+	                    .requestMatchers("/admin/**").hasRole("Admin") // 管理者専用URL
+	                    .requestMatchers("/user/**").hasRole("User")  // 一般ユーザー専用URL
 						.anyRequest().authenticated())
 				.formLogin(formLogin -> formLogin
 						.loginPage("/login").permitAll())
@@ -32,4 +34,5 @@ public class SecurityConfig {
 
 		return http.build();
 	}
+
 }

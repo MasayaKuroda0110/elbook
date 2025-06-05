@@ -6,6 +6,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class SidebarController{
 	
+	@GetMapping("/sidebar/home")
+	public String home() {
+		return "home";
+	}
+	
 	@GetMapping("/sidebar/setting")
 	public String setting() {
 		return "setting";

@@ -18,7 +18,8 @@
 				<br>
 				<input type="password" id="password" name="password" placeholder="新しいパスワード">
 				<br>
-				<label th:text="*{role}"></label>
+				<p th:if="*{role}=='User'" th:text="一般ユーザー"></p>
+				<p th:if="*{role}=='Admin'" th:text="管理ユーザー"></p>
 				<input type="submit" value="更新">
 			</form>
 		</div>

@@ -34,6 +34,10 @@ public class UserService implements UserDetailsService {
 	public User findByUsername(String userName) {
 		return userRepository.findByUserName(userName);
 	}
+	
+	public Integer findUserIdByUsername(String userName) {
+		return userRepository.findByUserName(userName).getUserId();
+	}
 
 	@Transactional
 	public void save(UserDto userDto) {
