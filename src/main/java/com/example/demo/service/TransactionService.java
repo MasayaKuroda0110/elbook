@@ -19,7 +19,7 @@ public class TransactionService{
 	
 	public void regBook(Book book) {
 		Transaction transaction = new Transaction();
-		transaction.setTransacitonType("本棚");
+		transaction.setTransactionType("本棚");
 		transaction.setBook(book);
 		transactionRepository.save(transaction);
 	}
@@ -28,7 +28,7 @@ public class TransactionService{
 		Transaction existingTransaction = transactionRepository.findByBook(book);
 		
 		existingTransaction.setUser(user);
-		existingTransaction.setTransacitonType("貸出");
+		existingTransaction.setTransactionType("貸出");
 		existingTransaction.setBorrowDate(new Date());
 		transactionRepository.save(existingTransaction);
 		return existingTransaction;
@@ -37,7 +37,7 @@ public class TransactionService{
 	public Transaction returnBook(Book book,Date returnDate) {
 		Transaction existingTransaction = transactionRepository.findByBook(book);
 		
-		existingTransaction.setTransacitonType("本棚");
+		existingTransaction.setTransactionType("本棚");
 		existingTransaction.setReturnDate(returnDate);
 		transactionRepository.save(existingTransaction);
 		return existingTransaction;

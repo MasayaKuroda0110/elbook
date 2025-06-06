@@ -12,20 +12,22 @@
 		<div th:replace="~{sidebar :: sidebar}"></div>
 		<div class="content">
 			<h1>書籍情報</h1>
+			<p th:if="${message}" th:text="${message}"></p>
 			<form th:action="@{/Book}" th:object="${book}" method="post">
 				<input type="hidden" name="bookId" th:value="*{bookId}" />
+				<input type="hidden" name="transaction.transactionType" th:value="*{transaction.transactionType}" />
 				<input type="text" id="title" name="title" placeholder="タイトル" th:value="*{title}" required>
 				<br>
 				<input type="text" id="name" name="author.name" placeholder="著者名" th:value="*{author.name}" required>
 				<br>
 				<input type="text" id="summary" name="summary" placeholder="あらすじ・概要" th:value="*{summary}" required>
 				<br>
-				<p th:text="'現在の貸出状況:' + ${transaction.transacitonType}"></p>
-				<p th:if="${transaction.transacitonType == '貸出'}" th:text="'貸出日' + ${#dates.format(transaction.borrowDate, 'yyyy/MM/dd')}"></p>
+				<p th:text="'現在の貸出状況:' + ${transaction.transactionType}"></p>
+				<p th:if="${transaction.transactionType == '貸出'}" th:text="'貸出日' + ${#dates.format(transaction.borrowDate, 'yyyy/MM/dd')}"></p>
 				
-				<button type="submit" name="action" value="rental" th:if="${transaction.transacitonType == '本棚'}">貸出</button>
+				<button type="submit" name="action" value="rental" th:if="${transaction.transactionType == '本棚'}">貸出</button>
 				
-				<button type="submit" name="action" value="return" th:if="${transaction.transacitonType == '貸出' and transaction.user.userId == currentUserId}">返却</button>
+				<button type="submit" name="action" value="return" th:if="${transaction.transactionType == '貸出' and transaction.user.userId == currentUserId}">返却</button>
 				
 				<button type="submit" name="action" value="update">更新</button>
 				

@@ -26,5 +26,9 @@ public class SidebarController{
 		return "bookList";
 	}
 	
+	@GetMapping("/userManagement")
+	public String userManagement() {
+		return "userManagement";
+	}
 	
 }

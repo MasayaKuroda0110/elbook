@@ -2,6 +2,8 @@ package com.example.demo.entity;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,10 +23,11 @@ public class Transaction{
 	private int transactionID;
 	
 	@Column(name = "transaction_type")
-	private String transacitonType;
+	private String transactionType;
 	
     @ManyToOne
     @JoinColumn(name = "book_id", nullable = false)
+    @JsonIgnore
 	private Book book;
     
     @ManyToOne
@@ -44,13 +47,13 @@ public class Transaction{
 	public void setTransactionID(int transactionID) {
 		this.transactionID = transactionID;
 	}
-
-	public String getTransacitonType() {
-		return transacitonType;
+	
+	public String getTransactionType() {
+		return transactionType;
 	}
 
-	public void setTransacitonType(String transacitonType) {
-		this.transacitonType = transacitonType;
+	public void setTransactionType(String transactionType) {
+		this.transactionType = transactionType;
 	}
 
 	public Book getBook() {

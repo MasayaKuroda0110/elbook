@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.entity.Book;
 import com.example.demo.entity.Transaction;
@@ -49,7 +50,8 @@ public class EditBookController{
 	public String handleBookForm(@ModelAttribute("book") Book book, 
 						   @RequestParam String action,
 						   @RequestParam (required = false) Integer transactionId,
-						   Model model) {
+						   Model model,
+						   RedirectAttributes redirectAttributes) {
 		if("update".equals(action)) {
 			bookService.saveBook(book);
 		}else if("rental".equals(action)){	
@@ -61,6 +63,10 @@ public class EditBookController{
 		return "redirect:/bookList";
 	}
 	
+	/**
+	 * 現在のログイン中のユーザー情報取得
+	 * @return ログイン中のユーザー情報
+	 */
 	public User getCurrentUser() {
 	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 	    if (authentication != null && authentication.isAuthenticated()) {
