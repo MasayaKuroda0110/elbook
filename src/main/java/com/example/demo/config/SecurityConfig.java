@@ -8,6 +8,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+/**
+ * SpringSecurityの設定クラス
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -22,16 +25,18 @@ public class SecurityConfig {
 		http
 				.authorizeHttpRequests(authorize -> authorize
 						.requestMatchers("/login", "/register").permitAll()
-	                    .requestMatchers("/admin/**").hasRole("Admin") // 管理者専用URL
-	                    .requestMatchers("/user/**").hasRole("User")  // 一般ユーザー専用URL
+						.requestMatchers("/management").hasRole("ADMIN")
+						.requestMatchers("/userManagement").hasRole("ADMIN")
+						.requestMatchers("/regBook").hasRole("ADMIN")
 						.anyRequest().authenticated())
 				.formLogin(formLogin -> formLogin
-						.loginPage("/login").permitAll())
-				.logout(logout -> logout.logoutUrl("/logout")
+						.loginPage("/login").permitAll()
+						.defaultSuccessUrl("/home", true))
+				.logout(logout -> logout
+						.logoutUrl("/sidebar/logout")
 						.logoutSuccessUrl("/login?logout")
 						.invalidateHttpSession(true)
 						.deleteCookies("JSESSIONID"));
-
 		return http.build();
 	}
 

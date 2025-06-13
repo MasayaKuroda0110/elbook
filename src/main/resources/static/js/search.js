@@ -80,9 +80,8 @@ function updateTable(data) {
             <tr>
                 <td>${book.title}</td>
                 <td>${authorName}</td>
-                <td>${book.summary}</td>
                 <td>${transactionType}</td>
-                <td><a href="/editBook?id=${book.bookId}">編集</a></td>
+                <td><a href="/editBook?id=${book.bookId}">詳細</a></td>
             </tr>`;
 		tableBody.innerHTML += row;
 	});

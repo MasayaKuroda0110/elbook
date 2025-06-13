@@ -12,11 +12,21 @@
     padding: 10px;
     height: 100vh;
 }
+
+a{
+	text-decoration: none;
+}
+
+.elbook{
+	font-size: 30px;
+}
+
 .logout{
 	position: fixed;
 	left: 0;
 	bottom: 0;
 	margin: 10px;
+	outline: none;
 }
 
 .content {

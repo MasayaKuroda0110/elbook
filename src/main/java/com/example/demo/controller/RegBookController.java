@@ -8,12 +8,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.example.demo.entity.BookDto;
 import com.example.demo.service.BookService;
 
+/**
+ * 書籍登録画面コントローラー
+ */
 @Controller
-public class RegBookController{
-	
+public class RegBookController {
+
 	@Autowired
 	private BookService BookService;
-	
+
 	@PostMapping("/regBook")
 	public String registerBook(@ModelAttribute BookDto bookDto) {
 		BookService.registerBook(bookDto.getTitle(), bookDto.getName(), bookDto.getSummary());

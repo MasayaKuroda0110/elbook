@@ -13,19 +13,23 @@ import jakarta.persistence.Table;
 @Table(name = "users")
 public class User{
 	
+	/** ユーザーID */
 	@jakarta.persistence.Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id")
 	private Integer userId;
 	
+	/** ユーザー名 */
 	@Column(name = "user_name",nullable = false,unique = true)
 	private String userName;
 	
+	/** パスワード */
 	@Column(name = "password",nullable = false)
 	private String password;
 	
+	/** 権限 */
 	@Column(name = "role",nullable = false)
-	private String role = "User";
+	private String role;
 
 	public Integer getUserId() {
 		return userId;

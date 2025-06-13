@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.demo.entity.Book;
 import com.example.demo.service.BookService;
 
+/**
+ * 書籍一覧画面コントローラー
+ */
 @Controller
 public class BookListController{
 	

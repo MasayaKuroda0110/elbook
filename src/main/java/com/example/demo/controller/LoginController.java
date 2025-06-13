@@ -15,46 +15,52 @@ import com.example.demo.entity.User;
 import com.example.demo.service.BookService;
 import com.example.demo.service.UserService;
 
-@Controller 
+/**
+ * ログイン画面コントローラー
+ */
+@Controller
 public class LoginController {
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private BookService bookService;
 
-    @GetMapping("/login") 
-    public String login() {
-        return "login"; 
-    }
-    
-    @GetMapping("/")
-    public String redirectToIndex() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication(); // 現在のユーザーの認証情報を取得します
-        if (authentication != null && authentication.isAuthenticated()) {
-            return "redirect:/home";  
-        }
-        return "redirect:/login"; 
-    }
-    
-    @GetMapping("/home") 
-    public String home(Model model) {
-    	List<Book> books = bookService.findAllRentalBooks(getCurrentUser());
-    	model.addAttribute("books",books);
-        return "home"; 
-    }
-    
-	
+	@GetMapping("/login")
+	public String login() {
+		return "login";
+	}
+
+	@GetMapping("/")
+	public String redirectToIndex() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication(); // 現在のユーザーの認証情報を取得します
+		if (authentication != null && authentication.isAuthenticated()) {
+			return "redirect:/home";
+		}
+		return "redirect:/login";
+	}
+
+	@GetMapping("/home")
+	public String home(Model model) {
+		List<Book> books = bookService.findAllRentalBooks(getCurrentUser());
+		model.addAttribute("books", books);
+		return "home";
+	}
+
+	/**
+	 * 現在のログイン中のユーザー情報取得
+	 * @return ログイン中のユーザー情報
+	 */
 	public User getCurrentUser() {
-	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-	    if (authentication != null && authentication.isAuthenticated()) {
-	        Object principal = authentication.getPrincipal();
-	        if (principal instanceof UserDetails) {
-	            UserDetails userDetails = (UserDetails) principal;
-	            return userService.findByUsername(userDetails.getUsername());
-	        }
-	    }
-	    return null;
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication != null && authentication.isAuthenticated()) {
+			Object principal = authentication.getPrincipal();
+			if (principal instanceof UserDetails) {
+				UserDetails userDetails = (UserDetails) principal;
+				return userService.findByUsername(userDetails.getUsername());
+			}
+		}
+		return null;
 	}
 }

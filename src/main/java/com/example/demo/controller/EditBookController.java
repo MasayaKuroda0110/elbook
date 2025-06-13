@@ -21,62 +21,65 @@ import com.example.demo.service.BookService;
 import com.example.demo.service.TransactionService;
 import com.example.demo.service.UserService;
 
-
-
+/**
+ * 書籍編集画面コントローラー
+ */
 @Controller
-public class EditBookController{
-	
+public class EditBookController {
+
 	@Autowired
 	private BookService bookService;
-	
+
 	@Autowired
 	private TransactionService transactionService;
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@GetMapping("/editBook")
 	public String getBook(@RequestParam("id") Integer id, Model model) {
 		Book book = bookService.findBook(id);
 		Transaction transaction = transactionService.findTransaction(book);
-		Integer currentUserId = getCurrentUser().getUserId();
-		model.addAttribute("book",book);
-		model.addAttribute("transaction",transaction);
-		model.addAttribute("currentUserId",currentUserId);
+		User currentUser = getCurrentUser();
+		model.addAttribute("book", book);
+		model.addAttribute("transaction", transaction);
+		model.addAttribute("currentUser", currentUser);
 		return "editBook";
 	}
-	
+
 	@PostMapping("/Book")
-	public String handleBookForm(@ModelAttribute("book") Book book, 
-						   @RequestParam String action,
-						   @RequestParam (required = false) Integer transactionId,
-						   Model model,
-						   RedirectAttributes redirectAttributes) {
-		if("update".equals(action)) {
+	public String handleBookForm(@ModelAttribute("book") Book book,
+			@RequestParam String action,
+			@RequestParam(required = false) Integer transactionId,
+			Model model,
+			RedirectAttributes redirectAttributes) {
+		if ("update".equals(action)) {
 			bookService.saveBook(book);
-		}else if("rental".equals(action)){	
+		} else if ("rental".equals(action)) {
 			transactionService.borrowBook(getCurrentUser(), book, new Date());
-		}else if("return".equals(action)) {
+		} else if ("return".equals(action)) {
 			transactionService.returnBook(book, new Date());
+		} else if ("delete".equals(action)) {
+			bookService.deleteBook(book);
 		}
-		
+
 		return "redirect:/bookList";
 	}
-	
+
 	/**
 	 * 現在のログイン中のユーザー情報取得
 	 * @return ログイン中のユーザー情報
 	 */
 	public User getCurrentUser() {
-	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-	    if (authentication != null && authentication.isAuthenticated()) {
-	        Object principal = authentication.getPrincipal();
-	        if (principal instanceof UserDetails) {
-	            UserDetails userDetails = (UserDetails) principal;
-	            return userService.findByUsername(userDetails.getUsername());
-	        }
-	    }
-	    return null;
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication != null && authentication.isAuthenticated()) {
+			Object principal = authentication.getPrincipal();
+			if (principal instanceof UserDetails) {
+				UserDetails userDetails = (UserDetails) principal;
+				return userService.findByUsername(userDetails.getUsername());
+			}
+		}
+		return null;
 	}
-	
+
 }

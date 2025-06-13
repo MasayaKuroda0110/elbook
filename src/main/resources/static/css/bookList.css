@@ -1,0 +1,27 @@
+.design02 {
+ width: 100%;
+ text-align: center;
+ border-collapse: collapse;
+ border-spacing: 0;
+ border: solid 1px #778ca3;
+}
+.design02 tr {
+ border-top: dashed 1px #778ca3;
+}
+.design02 th {
+ padding: 10px;
+ background: #e9faf9;
+}
+.design02 td {
+ padding: 10px;
+}
+
+.search{
+	height: 30px;
+	width: 500px;
+}
+
+.button {
+  width: 80px; 
+  height: 35px; 
+}

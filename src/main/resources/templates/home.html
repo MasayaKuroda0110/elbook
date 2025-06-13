@@ -5,6 +5,7 @@
 	<meta charset="UTF-8">
 	<title>ホーム</title>
 	<link th:href="@{css/layout.css}" rel="stylesheet">
+	<link th:href="@{css/home.css}" rel="stylesheet">
 </head>
 
 <body>
@@ -12,17 +13,21 @@
 		<div th:replace="~{sidebar :: sidebar}"></div>
 		<div class="content">
 			<h2>現在借りている書籍</h2>
-			<table>
+			<table class="design02">
 				<thead>
 					<tr>
 						<th>タイトル</th>
 						<th>貸出日</th>
+						<th>編集</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr th:each="book : ${books}">
 						<td th:text="${book.title}"></td>
 						<td th:text="${#dates.format(book.transaction.borrowDate, 'yyyy/MM/dd')}"></td>
+						<td>
+							<a th:href="@{/editBook(id=${book.bookId})}">編集</a>
+						</td>
 					</tr>
 				</tbody>
 			</table>

@@ -1,0 +1,18 @@
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center; /* 水平方向に中央配置 */
+    align-items: center; /* 垂直方向に中央配置 */
+    height: 100vh; /* ビューポート全体を使用 */
+    background-color: #f5f5f5; /* 背景色を設定 */
+}
+
+.content {
+	text-align: center;
+    width: 300px; /* 好みに合わせて調整可能 */
+    padding: 20px;
+    background-color: white; /* 白い背景で目立たせる */
+    border-radius: 8px; /* 角丸を追加 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 影をつける */
+}

@@ -2,6 +2,7 @@ package com.example.demo.entity;
 
 import java.util.Date;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -14,31 +15,37 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 /**
- * modelクラス
+ * 書籍modelクラス
  */
 @Entity
 @Table(name = "books")
 public class Book {
 
+	/** 書籍ID */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "book_id")
 	private Integer bookId;
 
+	/** タイトル */
 	@Column(name = "title")
 	private String title;
 
+	/** あらすじ・概要 */
 	@Column(name = "summary")
 	private String summary;
 
+	/** 登録日 */
 	@Column(name = "reg_date")
-	private Date regDate;
+	private Date regDate = new Date();
 
+	/** 著者 */
 	@ManyToOne
 	@JoinColumn(name = "author_id", referencedColumnName = "author_id")
 	private Author author;
-	
-	@OneToOne(mappedBy = "book", fetch = FetchType.LAZY)
+
+	/** 貸出 */
+	@OneToOne(mappedBy = "book", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	private Transaction transaction;
 
 	public Integer getBookId() {

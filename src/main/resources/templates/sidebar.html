@@ -8,15 +8,19 @@
 
 <body>
 	<div class="sidebar" th:fragment="sidebar">
-		<a th:href="@{/home}">ELBOOK</a>
+		<a class="elbook" th:href="@{/home}">ELBOOK</a>
 		<ul>
 			<li><a th:href="@{/bookList}">一覧</a></li>
-			<li><a th:href="@{/regBook}">登録</a></li>
+			<li sec:authorize="hasRole('ADMIN')">
+				<a th:href="@{/regBook}">登録</a>
+			</li>
 			<li><a th:href="@{/setting}">設定</a></li>
-			<li><a th:href="@{/userManagement}">管理</a></li>
+			<li sec:authorize="hasRole('ADMIN')">
+				<a th:href="@{/management}">管理</a>
+			</li>
 		</ul>
-		<form th:action="@{/logout}" method="post">
-			<button type="submit" id="logout">ログアウト</button>
+		<form th:action="@{/sidebar/logout}" method="POST">
+			<button type="submit" class="logout">ログアウト</button>
 		</form>
 	</div>
 </body>

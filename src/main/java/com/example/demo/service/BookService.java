@@ -13,6 +13,11 @@ import com.example.demo.entity.User;
 import com.example.demo.repository.AuthorRepository;
 import com.example.demo.repository.BookRepository;
 
+import jakarta.transaction.Transactional;
+
+/**
+ * 書籍サービス
+ */
 @Service
 public class BookService {
 
@@ -47,6 +52,10 @@ public class BookService {
 		transactionService.regBook(book);
 	}
 
+	/**
+	 * 書籍一覧の検索
+	 * @return 書籍一覧
+	 */
 	public List<Book> findAllBooks() {
 		return bookRepository.findAll();
 	}
@@ -77,18 +86,33 @@ public class BookService {
 	public Book findBook(Integer Id) {
 		return bookRepository.findByBookId(Id).getFirst();
 	}
-	
-    public List<Book> searchByTitle(String query) {
-        return bookRepository.findByTitleContaining(query);
-    }
 
-    public List<Book> searchByAuthor(String query) {
-        return bookRepository.findByAuthorNameContaining(query);
-    }
+	/**
+	 * タイトルで書籍検索
+	 * @param query タイトル
+	 * @return 書籍データ
+	 */
+	public List<Book> searchByTitle(String query) {
+		return bookRepository.findByTitleContaining(query);
+	}
 
-    public List<Book> searchByTitleOrAuthor(String query) {
-        return bookRepository.findByTitleContainingOrAuthorNameContaining(query, query);
-    }
+	/**
+	 * 著者で書籍検索
+	 * @param query 著者名
+	 * @return 書籍データ
+	 */
+	public List<Book> searchByAuthor(String query) {
+		return bookRepository.findByAuthorNameContaining(query);
+	}
+
+	/**
+	 * タイトルと著者で書籍検索
+	 * @param query 著者名orタイトル
+	 * @return 書籍データ
+	 */
+	public List<Book> searchByTitleOrAuthor(String query) {
+		return bookRepository.findByTitleContainingOrAuthorNameContaining(query, query);
+	}
 
 	/**
 	 * 書籍テーブルの、書籍を更新
@@ -105,6 +129,16 @@ public class BookService {
 		book.setTransaction(transaction);
 		book.setAuthor(author);
 		bookRepository.save(book);
+	}
+
+	/**
+	 * 書籍の削除
+	 * @param book 書籍データ
+	 */
+	@Transactional
+	public void deleteBook(Book book) {
+		transactionService.deleteTransaction(book);
+		bookRepository.delete(book);
 	}
 
 }

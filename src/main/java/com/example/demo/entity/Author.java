@@ -9,19 +9,21 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 /**
- * modelクラス
+ * 著者modelクラス
  */
 @Entity
 @Table(name = "authors")
 @Data
-public class Author{
-	
+public class Author {
+
+	/** 著者ID */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "author_id")
 	private Integer authorId;
-	
-	@Column(name = "name",nullable = false)
+
+	/** 著者名 */
+	@Column(name = "name", nullable = false)
 	private String name;
-	
+
 }

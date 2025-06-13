@@ -7,9 +7,11 @@ import jakarta.validation.constraints.NotEmpty;
  */
 public class UserDto{
 	
+	/** ユーザー名 */ 
 	@NotEmpty
 	private String userName;
 	
+	/** パスワード */
 	@NotEmpty
 	private String password;
 

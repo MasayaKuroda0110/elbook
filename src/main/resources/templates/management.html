@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>管理</title>
+	<link th:href="@{css/layout.css}" rel="stylesheet">
+</head>
+
+<body>
+	<div class="container">
+		<div th:replace="~{sidebar :: sidebar}"></div>
+		<div class="content">
+			<a th:href="@{/userManagement}">・ユーザー管理</a>
+		</div>
+	</div>
+</body>
+
+</html>

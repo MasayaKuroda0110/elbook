@@ -5,6 +5,7 @@
 	<meta charset="UTF-8">
 	<title>ホーム</title>
 	<link th:href="@{css/layout.css}" rel="stylesheet">
+	<link th:href="@{css/bookList.css}" rel="stylesheet">
 	<script src="js/search.js"></script>
 </head>
 
@@ -15,35 +16,32 @@
 			<h1>書籍一覧</h1>
 
 			<div class="search-section">
-				<input type="text" id="search" placeholder="タイトルや著者で検索">
+				<input type="text" class="search" id="search" placeholder="タイトルや著者で検索">
+				<button class="button" onclick="performSearch()">検索</button>
+				<button class="button" onclick="resetSearchForm()">リセット</button>
 				<div>
 					<label><input type="checkbox" id="searchByTitle">タイトル</label>
 					<label><input type="checkbox" id="searchByAuthor">著者</label>
 				</div>
-				<button onclick="performSearch()">検索</button>
-				<button onclick="resetSearchForm()">リセット</button>
 			</div>
 
-			<table>
+			<table class="design02">
 				<thead>
 					<tr>
 						<th>タイトル</th>
 						<th>著者</th>
-						<th>あらすじ・概要</th>
 						<th>貸出状況</th>
+						<th>詳細</th>
 					</tr>
 				</thead>
 				<tbody id="results">
 					<tr th:each="book : ${books}">
 						<td th:text="${book.title}"></td>
 						<td th:text="${book.author.name}"></td>
-						<td th:text="${book.summary}"></td>
+						<td th:if="${book.transaction.transactionType == '貸出'}" th:text="'貸出'"></td>
+						<td th:if="${book.transaction.transactionType == '本棚'}" th:text="'本棚'"></td>
 						<td>
-							<p th:if="${book.transaction.transactionType == '貸出'}" th:text="'貸出'"></p>
-							<p th:if="${book.transaction.transactionType == '本棚'}" th:text="'利用可能'"></p>
-						</td>
-						<td>
-							<a th:href="@{/editBook(id=${book.bookId})}">編集</a>
+							<a th:href="@{/editBook(id=${book.bookId})}">詳細</a>
 						</td>
 					</tr>
 				</tbody>

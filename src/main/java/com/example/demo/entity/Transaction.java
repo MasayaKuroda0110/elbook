@@ -11,34 +11,44 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
+/**
+ * 貸出管理modelクラス
+ */
 @Entity
-@Table(name="Transactions")
-public class Transaction{
-	
+@Table(name = "Transactions")
+public class Transaction {
+
+	/** 貸出ID */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "transaction_id")
 	private int transactionID;
-	
+
+	/** 貸出状況 */
 	@Column(name = "transaction_type")
 	private String transactionType;
-	
-    @ManyToOne
-    @JoinColumn(name = "book_id", nullable = false)
-    @JsonIgnore
+
+	/** 書籍 */
+	@OneToOne
+	@JoinColumn(name = "book_id", nullable = false)
+	@JsonIgnore
 	private Book book;
-    
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-    
-    @Column(name = "borrow_date")
-    private Date borrowDate;
-    
-    @Column(name = "return_date")
-    private Date returnDate;
+
+	/** ユーザー */
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User user;
+
+	/** 貸出日 */
+	@Column(name = "borrow_date")
+	private Date borrowDate;
+
+	/** 返却日 */
+	@Column(name = "return_date")
+	private Date returnDate;
 
 	public int getTransactionID() {
 		return transactionID;
@@ -47,7 +57,7 @@ public class Transaction{
 	public void setTransactionID(int transactionID) {
 		this.transactionID = transactionID;
 	}
-	
+
 	public String getTransactionType() {
 		return transactionType;
 	}
@@ -87,6 +97,5 @@ public class Transaction{
 	public void setReturnDate(Date returnDate) {
 		this.returnDate = returnDate;
 	}
-    
-    
+
 }
