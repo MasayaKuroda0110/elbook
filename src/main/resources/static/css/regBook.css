@@ -1,0 +1,18 @@
+.title_form {
+	width: 200px;
+}
+
+.author_form {
+	margin-top: 10px;
+}
+
+.summary_form {
+	margin-top: 10px;
+	height: 100px;
+	width: 400px;
+	resize: none;
+}
+
+.reg_btn {
+	margin-top: 10px;
+}
