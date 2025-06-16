@@ -14,7 +14,7 @@
 		<div th:replace="~{sidebar :: sidebar}"></div>
 		<div class="content">
 			<h1>書籍一覧</h1>
-
+			<p th:if="${message != null}" th:text="${message}"></p>
 			<div class="search-section">
 				<input type="text" class="search" id="search" placeholder="タイトルや著者で検索">
 				<button class="button" onclick="performSearch()">検索</button>
@@ -41,7 +41,7 @@
 						<td th:if="${book.transaction.transactionType == '貸出'}" th:text="'貸出'"></td>
 						<td th:if="${book.transaction.transactionType == '本棚'}" th:text="'本棚'"></td>
 						<td>
-							<a th:href="@{/editBook(id=${book.bookId})}">詳細</a>
+							<a th:href="@{/editBook(id=${book.bookId},type='bookList')}">詳細</a>
 						</td>
 					</tr>
 				</tbody>

@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -57,6 +58,7 @@ public class TransactionService {
 	public Transaction returnBook(Book book, Date returnDate) {
 		Transaction existingTransaction = transactionRepository.findByBook(book);
 
+		existingTransaction.setUser(null);
 		existingTransaction.setTransactionType("本棚");
 		existingTransaction.setReturnDate(returnDate);
 		transactionRepository.save(existingTransaction);
@@ -87,6 +89,16 @@ public class TransactionService {
 	 */
 	public List<Transaction> findAllTransaction() {
 		return transactionRepository.findAll();
+	}
+	
+	public List<Transaction> findTransactionByUserIdTransactionType(User user){
+		List<Transaction> lists = new ArrayList<>();
+		for(Transaction transaction:transactionRepository.findByUser(user)) {
+			if(transaction.getTransactionType().equals("貸出")) {
+				lists.add(transaction);
+			}
+		}
+		return lists;
 	}
 
 	/**

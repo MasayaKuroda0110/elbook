@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -83,8 +84,12 @@ public class BookService {
 	 * @param Id 書籍ID
 	 * @return 書籍データ
 	 */
-	public Book findBook(Integer Id) {
-		return bookRepository.findByBookId(Id).getFirst();
+	public Book findBook(Integer Id) throws NoSuchElementException{
+	    List<Book> books = bookRepository.findByBookId(Id);
+	    if (books.isEmpty()) {
+	        throw new NoSuchElementException("No book found for the given ID: " + Id);
+	    }
+	    return books.get(0);
 	}
 
 	/**

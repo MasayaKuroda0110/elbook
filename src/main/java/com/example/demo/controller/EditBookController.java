@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.util.Date;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -37,8 +38,19 @@ public class EditBookController {
 	private UserService userService;
 
 	@GetMapping("/editBook")
-	public String getBook(@RequestParam("id") Integer id, Model model) {
-		Book book = bookService.findBook(id);
+	public String getBook(@RequestParam("id") Integer id,@RequestParam(required = false) String type, RedirectAttributes redirectAttributes, Model model) {
+		Book book = null;
+		
+		try {
+			book = bookService.findBook(id);
+		} catch (NoSuchElementException ex) {
+			redirectAttributes.addFlashAttribute("message","書籍が見つかりませんでした");
+			if(type.equals("home")) {
+				return "redirect:/home";
+			}
+			return "redirect:/bookList";
+		}
+		
 		Transaction transaction = transactionService.findTransaction(book);
 		User currentUser = getCurrentUser();
 		model.addAttribute("book", book);

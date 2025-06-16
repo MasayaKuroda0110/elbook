@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.example.demo.entity.User;
 import com.example.demo.service.UserService;
@@ -20,8 +21,9 @@ public class UserManagementController {
 	private UserService userService;
 
 	@GetMapping("/userManagement")
-	public String getUserManagement(Model model) {
+	public String getUserManagement(@ModelAttribute("message") String message,Model model) {
 		List<User> users = userService.findAll();
+		model.addAttribute("message", message);
 		model.addAttribute("users", users);
 		return "userManagement";
 	}

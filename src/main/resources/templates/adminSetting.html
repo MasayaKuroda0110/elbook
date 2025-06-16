@@ -5,6 +5,7 @@
 	<meta charset="UTF-8">
 	<title>管理設定</title>
 	<link th:href="@{css/layout.css}" rel="stylesheet">
+	<link th:href="@{css/adminSetting.css}" rel="stylesheet">
 </head>
 
 <body>
@@ -14,18 +15,23 @@
 			<h1>管理設定：ユーザー編集</h1>
 			<form th:action="@{/adminSetting}" th:object="${user}" method="post">
 				<input type="hidden" name="userId" th:value="*{userId}" />
-				<input type="text" id="userName" name="userName" th:value="*{userName}" required>
+				<input type="text" class="userName_form" id="userName" name="userName" th:value="*{userName}"
+					maxlength="255" required>
 				<br>
-				<input type="password" id="password" name="password" placeholder="新しいパスワード">
+				<input type="password" class="password_form" id="password" name="password" maxlength="255"
+					placeholder="新しいパスワード">
 				<br>
-				<label>権限:
-					<select id="role" name="role" th:field="*{role}">
-						<option th:each="role : ${roles}" th:value="${role}" th:text="${role}"></option>
-					</select>
-				</label>
-				<br>
-				<button type="submit" name="action" value="update">更新</button>
-				<button type="submit" name="action" value="delete">削除</button>
+
+				<div class="role">
+					<label>権限:
+						<select id="role" name="role" th:field="*{role}">
+							<option th:each="role : ${roles}" th:value="${role}" th:text="${role}"></option>
+						</select>
+					</label>
+				</div>
+
+				<button type="submit" class="update_btn" name="action" value="update">更新</button>
+				<button type="submit" class="delete_btn" name="action" value="delete">削除</button>
 			</form>
 		</div>
 	</div>

@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.example.demo.entity.Book;
 import com.example.demo.entity.User;
@@ -42,9 +43,10 @@ public class LoginController {
 	}
 
 	@GetMapping("/home")
-	public String home(Model model) {
+	public String home(@ModelAttribute("message") String message,Model model) {
 		List<Book> books = bookService.findAllRentalBooks(getCurrentUser());
 		model.addAttribute("books", books);
+		model.addAttribute("message",message);
 		return "home";
 	}
 

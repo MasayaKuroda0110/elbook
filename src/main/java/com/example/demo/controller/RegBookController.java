@@ -20,6 +20,6 @@ public class RegBookController {
 	@PostMapping("/regBook")
 	public String registerBook(@ModelAttribute BookDto bookDto) {
 		BookService.registerBook(bookDto.getTitle(), bookDto.getName(), bookDto.getSummary());
-		return "redirect:/home";
+		return "redirect:/bookList";
 	}
 }

@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.entity.User;
+import com.example.demo.service.TransactionService;
 import com.example.demo.service.UserService;
 
 /**
@@ -25,10 +27,17 @@ public class EditUserController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private TransactionService transactionService;
 
 	@GetMapping("/adminSetting")
-	public String adminSetting(@RequestParam("id") Integer id, Model model) {
+	public String adminSetting(@RequestParam("id") Integer id,RedirectAttributes redirectAttributes, Model model) {
 		User user = userService.findByUserId(id);
+		if(user == null) {
+			redirectAttributes.addFlashAttribute("message","ユーザーが見つかりませんでした");
+			return "redirect:/userManagement";
+		}
 		model.addAttribute("user", user);
 		model.addAttribute("roles", List.of("ROLE_ADMIN", "ROLE_USER"));
 		return "adminSetting";
@@ -36,23 +45,53 @@ public class EditUserController {
 
 	@PostMapping("/adminSetting")
 	public String updateUser(@ModelAttribute("user") User user,
-			@RequestParam String action) {
+			@RequestParam String action,
+			RedirectAttributes redirectAttributes) {
 
 		if ("update".equals(action)) {
 			userService.updateUser(user);
-			Authentication currentAuth = SecurityContextHolder.getContext().getAuthentication();
-			UserDetails updatedUser = userService.loadUserByUsername(user.getUserName());
-			SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(
-					updatedUser,
-					currentAuth.getCredentials(),
-					updatedUser.getAuthorities()));
+			User currentUser = getCurrentUser();
 			if(user.getRole().equals("ROLE_USER")) {
-				return "home";
+			    // 認証情報を更新
+			    Authentication currentAuth = SecurityContextHolder.getContext().getAuthentication();
+			    UserDetails updatedUser = userService.loadUserByUsername(user.getUserName());
+			    Authentication newAuth = new UsernamePasswordAuthenticationToken(
+			        updatedUser, 
+			        currentAuth.getCredentials(), 
+			        updatedUser.getAuthorities()
+			    );
+			    // ログインユーザーと更新ユーザーの一致を確認
+			    if(currentUser.getUserId() == userService.findByUsername(updatedUser.getUsername()).getUserId()) {
+				    SecurityContextHolder.getContext().setAuthentication(newAuth);
+					return "home";
+			    }
+
 			}
 		} else if ("delete".equals(action)) {
-			userService.deleteUser(user);
+			if(transactionService.findTransactionByUserIdTransactionType(user).size() == 0) {
+				userService.deleteUser(user);
+			} else {
+				redirectAttributes.addFlashAttribute("message","このユーザーは現在書籍貸出中なので削除できません");
+				return "redirect:/userManagement";
+			}
 		}
 		return "redirect:/userManagement";
+	}
+	
+	/**
+	 * 現在のログイン中のユーザー情報取得
+	 * @return ログイン中のユーザー情報
+	 */
+	public User getCurrentUser() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication != null && authentication.isAuthenticated()) {
+			Object principal = authentication.getPrincipal();
+			if (principal instanceof UserDetails) {
+				UserDetails userDetails = (UserDetails) principal;
+				return userService.findByUsername(userDetails.getUsername());
+			}
+		}
+		return null;
 	}
 
 }

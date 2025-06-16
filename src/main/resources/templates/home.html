@@ -13,6 +13,7 @@
 		<div th:replace="~{sidebar :: sidebar}"></div>
 		<div class="content">
 			<h2>現在借りている書籍</h2>
+			<p th:if="${message != null}" th:text="${message}"></p>
 			<table class="design02">
 				<thead>
 					<tr>
@@ -26,7 +27,7 @@
 						<td th:text="${book.title}"></td>
 						<td th:text="${#dates.format(book.transaction.borrowDate, 'yyyy/MM/dd')}"></td>
 						<td>
-							<a th:href="@{/editBook(id=${book.bookId})}">編集</a>
+							<a th:href="@{/editBook(id=${book.bookId},type='home')}">編集</a>
 						</td>
 					</tr>
 				</tbody>
