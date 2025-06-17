@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,10 +44,15 @@ public class LoginController {
 	}
 
 	@GetMapping("/home")
-	public String home(@ModelAttribute("message") String message,Model model) {
-		List<Book> books = bookService.findAllRentalBooks(getCurrentUser());
+	public String home(@ModelAttribute("message") String message, Model model) {
+		List<Book> books = new ArrayList<Book>();
+		try {
+			books = bookService.findAllRentalBooks(getCurrentUser());
+		} catch (Exception e) {
+			message = "書籍の取得中に問題が発生しました";
+		}
 		model.addAttribute("books", books);
-		model.addAttribute("message",message);
+		model.addAttribute("message", message);
 		return "home";
 	}
 

@@ -67,13 +67,10 @@ public class BookService {
 	 * @return レンタルリスト
 	 */
 	public List<Book> findAllRentalBooks(User user) {
-		List<Transaction> transactionLists = new ArrayList<>();
 		List<Book> rentalLists = new ArrayList<>();
-		transactionLists = transactionService.findAllTransaction();
+		List<Transaction> transactionLists = transactionService.findByUserAndTransactionType(user, "貸出");
 		for (Transaction transaction : transactionLists) {
-			if (transaction.getTransactionType().equals("貸出") && transaction.getUser() == user) {
-				rentalLists.add(transaction.getBook());
-			}
+			rentalLists.add(transaction.getBook());
 		}
 
 		return rentalLists;

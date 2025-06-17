@@ -44,7 +44,7 @@ public class TransactionService {
 
 		existingTransaction.setUser(user);
 		existingTransaction.setTransactionType("貸出");
-		existingTransaction.setBorrowDate(new Date());
+		existingTransaction.setBorrowDate(borrowDate);
 		transactionRepository.save(existingTransaction);
 		return existingTransaction;
 	}
@@ -107,5 +107,15 @@ public class TransactionService {
 	 */
 	public void deleteTransaction(Book book) {
 		transactionRepository.delete(findTransaction(book));
+	}
+
+	/**
+	 * 特定ユーザーの貸出書籍検索
+	 * @param user ユーザー情報
+	 * @param transactionType 貸出状況
+	 * @return 貸出記録
+	 */
+	public List<Transaction> findByUserAndTransactionType(User user, String transactionType) {
+		return transactionRepository.findByUserAndTransactionType(user, transactionType);
 	}
 }
