@@ -1,5 +1,5 @@
 # Java 21の公式イメージを使用
-FROM eclipse-temurin:21-jdk-slim
+FROM eclipse-temurin:21-jdk
 
 # 作業ディレクトリを作成
 WORKDIR /app
