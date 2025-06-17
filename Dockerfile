@@ -11,4 +11,4 @@ COPY target/ELBOOK.jar app.jar
 EXPOSE 8080
 
 # アプリケーションを実行
-ENTRYPOINT ["java", "-jar", "ELBOOK.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
