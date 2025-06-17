@@ -5,7 +5,7 @@ FROM eclipse-temurin:21-jdk
 WORKDIR /app
 
 # ビルドされたJARファイルをコンテナにコピー
-COPY target/*.jar app.jar
+COPY target/ELBOOK.jar app.jar
 
 # ポートを公開
 EXPOSE 8080
