@@ -5,10 +5,10 @@ FROM eclipse-temurin:17-jdk
 WORKDIR /app
 
 # ビルドされたJARファイルをコンテナにコピー
-COPY target/ELBOOK.jar ELBOOK.jar
+COPY target/ELBOOK.jar app.jar
 
 # ポートを公開
 EXPOSE 8080
 
 # アプリケーションを実行
-ENTRYPOINT ["java", "-jar", "ELBOOK.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
