@@ -1,14 +1,11 @@
-# Java 17の公式イメージを使用
-FROM eclipse-temurin:17-jdk
+FROM maven:3.9.8-eclipse-temurin-17 AS build
 
-# 作業ディレクトリを作成
 WORKDIR /app
 
-# Mavenでビルド
+COPY . .
+
 RUN mvn clean package
 
-# ポートを公開
 EXPOSE 8080
 
-# アプリケーションを実行
-ENTRYPOINT ["java", "-jar", "ELBOOK.jar"]
+ENTRYPOINT ["java", "-jar", "target/ELBOOK.jar"]
