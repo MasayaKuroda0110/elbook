@@ -18,7 +18,6 @@
 			<table class="design02">
 				<thead>
 					<tr>
-						<th>ユーザーID</th>
 						<th>ユーザーネーム</th>
 						<th>権限</th>
 						<th></th>
@@ -26,7 +25,6 @@
 				</thead>
 				<tbody>
 					<tr th:each="user:${users}">
-						<td th:text="${user.userId}"></td>
 						<td th:text="${user.userName}"></td>
 						<td th:text="${user.role}"></td>
 						<td><a th:href="@{/adminSetting(id=${user.userId})}">編集</a></td>
