@@ -49,7 +49,15 @@ public class EditUserController {
 			RedirectAttributes redirectAttributes) {
 
 		if ("update".equals(action)) {
-			userService.updateUser(user);
+			
+			try {
+				userService.updateUser(user);
+			} catch (Exception e) {
+				redirectAttributes.addFlashAttribute("message","ユーザーの更新に失敗しました");
+				return "redirect:/userManagement";
+			}
+			
+			
 			User currentUser = getCurrentUser();
 			if(user.getRole().equals("ROLE_USER")) {
 			    // 認証情報を更新

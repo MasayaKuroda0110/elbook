@@ -13,9 +13,10 @@
 		<div th:replace="~{sidebar :: sidebar}"></div>
 		<div class="content">
 			<h1>設定</h1>
+			<p th:if="${message} != null" th:text="${message}"></p>
 			<form th:action="@{/setting}" th:object="${user}" method="post">
 				<input type="hidden" name="userId" th:value="*{userId}" />
-				<input type="text" class="userName_form" id="userName" name="userName" th:value="*{userName}" maxlength="255" required>
+				<input type="text" class="userName_form" id="userName" name="userName" th:value="*{userName}" maxlength="255" placeholder="ユーザー名" required>
 				<br>
 				<input type="password" class="password_form" id="password" name="password" maxlength="255" placeholder="新しいパスワード">
 				<br>
@@ -26,6 +27,7 @@
 				<label th:if="*{role}=='ROLE_ADMIN'" th:text="管理"></label>
 				</label>
 				</div>
+				<input type="hidden" name="role" th:value="*{role}" />
 				
 				<input type="submit" class="update_btn" value="更新">
 			</form>

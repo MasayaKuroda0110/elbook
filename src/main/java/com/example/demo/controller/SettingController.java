@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.entity.User;
 import com.example.demo.service.UserService;
@@ -36,8 +37,14 @@ public class SettingController {
 	}
 
 	@PostMapping("/setting")
-	public String updateUser(@ModelAttribute("user") User user) {
-		userService.updateUser(user);
+	public String updateUser(@ModelAttribute("user") User user,RedirectAttributes redirectAttributes) {
+
+		try {
+			userService.updateUser(user);
+		} catch (Exception e) {
+			redirectAttributes.addFlashAttribute("message","ユーザーの更新に失敗しました");
+			return "redirect:/setting";
+		}
 
 		// 認証情報を更新
 		Authentication currentAuth = SecurityContextHolder.getContext().getAuthentication();
@@ -65,4 +72,5 @@ public class SettingController {
 		}
 		return null;
 	}
+
 }

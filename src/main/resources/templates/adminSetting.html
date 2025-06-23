@@ -13,6 +13,7 @@
 		<div th:replace="~{sidebar :: sidebar}"></div>
 		<div class="content">
 			<h1>管理設定：ユーザー編集</h1>
+			<p th:if="${message} != null" th:text="${message}"></p>
 			<form th:action="@{/adminSetting}" th:object="${user}" method="post">
 				<input type="hidden" name="userId" th:value="*{userId}" />
 				<input type="text" class="userName_form" id="userName" name="userName" th:value="*{userName}"
